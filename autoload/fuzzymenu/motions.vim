@@ -32,6 +32,26 @@ let s:motions = {
       \ 'Line': 'Line',
       \ }
 
+let s:easy_motions = {
+      \ 'f': 'Find {char} to the right',
+      \ 'F': 'Find {char} to the left',
+      \ 't': 'Till before the {char} to the right',
+      \ 'T': 'Till after the {char} to the right',
+      \ 'w': 'word',
+      \ 'W': 'WORD',
+      \ 'b': 'backword',
+      \ 'B': 'BACKWORD',
+      \ 'e': 'to end of word',
+      \ 'E': 'to end of WORD',
+      \ 'ge': 'to end of previous word',
+      \ 'gE': 'to end of previous WORD',
+      \ 'j': 'down one line',
+      \ 'k': 'up one line',
+      \ 'n': 'next match',
+      \ 'N': 'previous match',
+      \ 's': 'Find(Search) {char} forward and backward',
+      \ }
+
 ""
 " @public
 " Fuzzy-select a motion (for yank,change,delete,etc)
@@ -44,6 +64,28 @@ function! fuzzymenu#motions#Run(operator, multiplier) abort
   \ }
   call fzf#run(fzf#wrap('fzm#Motions', opts, 0))
 endfunction
+
+function! fuzzymenu#motions#EasyRun(operator) abort
+  let opts = {
+    \ 'source': s:EasyMotionsSource(a:operator),
+    \ 'sink': function('s:MotionsSink'),
+    \ 'options': ['--ansi',
+    \   '--header', ':: choose a motion'],
+  \ }
+  call fzf#run(fzf#wrap('fzm#Motions', opts, 0))
+endfunction
+
+function! s:EasyMotionsSource(operator) abort
+  let motions = []
+  for i in items(s:easy_motions)
+    let key = i[0]
+    let val = i[1]
+    let motion = printf("%s%s%s\t%s", a:operator, g:mapleader, key, val)
+    call add(motions, motion)
+  endfor
+  return motions
+endfunction
+
 
 function! s:MotionsSource(operator, multiplier) abort
   let motions = []
