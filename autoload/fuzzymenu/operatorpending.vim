@@ -6,6 +6,7 @@ let s:operatorPending = {
       \ 'a': 'Around (text object)',
       \ '...': 'Other (motions)',
       \ 'n...': 'Multiplier (text objects or motions)',
+      \ 'e': 'EasyMotion (motions)',
       \ }
 
 function! s:categories() abort
@@ -44,6 +45,8 @@ function! s:OperatorPendingSink(operator, arg) abort
       let multiplier = input('Enter multiplier (or leave blank for a single item):')
     endif
     call fuzzymenu#motions#Run(a:operator, multiplier)
+  elseif key == 'e'
+    call fuzzymenu#motions#EasyRun(a:operator)
   else
     call fuzzymenu#textobjects#Run(a:operator, key)
   endif
