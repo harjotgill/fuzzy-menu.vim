@@ -9,6 +9,13 @@ let s:menuItems = []
 
 ""
 " @public
+" Reset menu
+function! fuzzymenu#Reset() abort
+  let s:menuItems = []
+endfunction
+
+""
+" @public
 " @usage {items} {baseDef}
 " Add several menu items to fuzzymenu. {items} is a dict of names and defs.
 " {baseDef} is a dict to combine with each item
