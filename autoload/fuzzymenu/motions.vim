@@ -80,7 +80,7 @@ function! s:EasyMotionsSource(operator) abort
   for i in items(s:easy_motions)
     let key = i[0]
     let val = i[1]
-    let motion = printf("%s%s%s\t%s", a:operator, mapleader, key, val)
+    let motion = printf("%s%s%s\t%s", a:operator, "\<Leader>", key, val)
     call add(motions, motion)
   endfor
   return motions
