@@ -288,7 +288,7 @@ function! s:MenuSink(mode, fl, ll, arg) abort
       " This will only be executed for entries explicitly tagged as 'visual'
       execute "'<,'>" . def['exec']
     else
-      echom a:mode
+      " echom a:mode
       execute def['exec']
     endif
   elseif has_key(def, 'normal')
